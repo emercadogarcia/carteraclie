@@ -25,7 +25,7 @@ WHERE V.EMPRESA  ='004'
 	   AND V.ARTICULO = '00036636'
 	   AND V.CLIENTE = his.CODIGO_CLIENTE
 	   AND V.EJERCICIO = to_char(his.FECHA_FACTURA,'YYYY')
-	   AND V.PERIODO = to_number(to_char(his.FECHA_FACTURA,'MM'),'99')) PPTO_COBRO_MOROSO, cli.RAZON_SOCIAL    FROM (SELECT
+	   AND V.PERIODO = to_number(to_char(his.FECHA_FACTURA,'MM'),'99')) PPTO_COBRO_MOROSO, cli.RAZON_SOCIAL FROM (SELECT
          TIPO_C
        , FECHA_VENCIMIENTO
        , DOCUMENTO
@@ -97,11 +97,9 @@ WHERE V.EMPRESA  ='004'
        , D_BANCO_REMESA_FINANCIACION
        , FACTORING
        , FACTOR
-FROM
-         (
-                SELECT
-                       historico_cobros.*
-                     , (
+FROM (
+      SELECT
+     historico_cobros.*, (
                               SELECT
                                      b.nombre
                               FROM
@@ -177,7 +175,7 @@ FROM
                                                           AND rownum                   = 1
                                             )
                               )
-                              )                                                                                                                                                                                                                                                                                                                                                                                                                FECHA_TIMBRADO
+                              ) FECHA_TIMBRADO
                      , f_cobros_cambios (pkpantallas.get_variable_env_varchar2('CAMBIO_ACTUAL'), pkpantallas.get_variable_env_varchar2('CAMBIO_ASEGURADO'), pkpantallas.get_variable_env_varchar2('DIVISA_PRESENTACION'), pkpantallas.get_variable_env_varchar2('CODIGO_DIVISA_PRESENTACION'), pkpantallas.get_variable_env_number('CAMBIO_DIVISA_PRESEN'), pkpantallas.get_variable_env_date('FECHA_VALOR'), pkpantallas.get_variable_env_varchar2('DIVISA_EMPRESA'), pkpantallas.get_variable_env_number('DECIMALES_EMPRESA'), divisa_origen, importe_divisa, importe_cobrado_divisa,valor_cambio, documento_vivo, importe_div_no_asegurado, valor_cambio_no_aseg, importe_divisa_asegurado, importe_pdte_divisa, importe, importe_endosado, importe_sustituido, importe_cobrado, importe_sustituido_divisa) P_IMPORTE
                      , v_importe_divisa                                                                                                                                                                                                                                                                                                                                                                                                                P_IMPORTE_DIV
                      , (
@@ -504,4 +502,6 @@ WHERE
 		 AND SUBSTR(historico_detallado_apuntes.entidad,1,2) = 'BA') cob ON cob.codigo_rapido = his.CODIGO_CLIENTE and cob.FECHA_FACTURA = his.FECHA_FACTURA AND cob.documento2 = his.documento
 		 INNER JOIN CLIENTES cli ON his.codigo_cliente = cli.CODIGO_RAPIDO AND his.empresa = cli.CODIGO_EMPRESA
 		 WHERE  his.CODIGO_CLIENTE='014676' /*AND hIS.documento = '310/000628'*/
-		 AND his.fecha_factura BETWEEN TO_DATE('10/07/2020', 'DD/MM/YYYY') AND TO_DATE('10/07/2021', 'DD/MM/YYYY');
+		 AND his.fecha_factura <= TO_DATE('31/08/2022', 'DD/MM/YYYY')
+BETWEEN TO_DATE('10/07/2020', 'DD/MM/YYYY') AND TO_DATE('10/07/2021', 'DD/MM/YYYY');
+
