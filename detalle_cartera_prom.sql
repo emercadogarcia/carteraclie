@@ -6,8 +6,7 @@ FROM (SELECT  historico_cobros.* ,(SELECT b.nombre FROM bancos b WHERE b.empresa
 WHERE historico_cobros.caracter_asiento IN (
     SELECT b.codigo_centro FROM grupos_ccont a, centros_grupo_ccont b WHERE a.empresa = '004' AND b.empresa = a.empresa AND a.codigo = '0401' AND a.codigo = b.codigo_grupo) 
 AND NVL(historico_cobros.status_impagado, 'N') IN ('N','S','D','P','A','F') AND historico_cobros.documento_vivo = 'S' AND (historico_cobros.status_remesado = 'N' OR historico_cobros.status_remesado IS NULL) AND historico_cobros.tipo_c = 'CO' AND historico_cobros.empresa = '004' AND
- (EXISTS (SELECT 1 FROM empresas_conta e WHERE e.codigo = '004' AND e.grupo_balance_obligatorio = 'N') OR EXISTS (SELECT 1 FROM usuarios_gb u, centros_grupo_ccont cgc WHERE cgc.empresa = '004' AND cgc.codigo_centro = historico_cobros.caracter_asiento AND u.grupo_balance = cgc.codigo_grupo AND u.codigo_empresa ='004')) 
+ (EXISTS (SELECT 1 FROM empresas_conta e WHERE e.codigo = '004' AND e.grupo_balance_obligatorio = 'N') 
+ OR EXISTS (SELECT 1 FROM usuarios_gb u, centros_grupo_ccont cgc WHERE cgc.empresa = '004' AND cgc.codigo_centro = historico_cobros.caracter_asiento AND u.grupo_balance = cgc.codigo_grupo AND u.codigo_empresa ='004')) 
 order by FECHA_VENCIMIENTO,DIVISA_ORIGEN;
-
-
 
