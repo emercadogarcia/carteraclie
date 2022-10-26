@@ -1,5 +1,5 @@
 -- SUCPROCEDURE O_DATOS_REP_CARTERA
-CREATE OR REPLACE PROCEDURE       SUCO_DATOS_REP_CARTERA(P_EMPRESA VARCHAR2,P_FECHAI DATE,P_FECHAF DATE,P_USUARIO VARCHAR2)
+CREATE OR REPLACE PROCEDURE SUCO_DATOS_REP_CARTERA(P_EMPRESA VARCHAR2,P_FECHAI DATE,P_FECHAF DATE,P_USUARIO VARCHAR2)
 IS
 
     CURSOR CLIENTES IS 
@@ -134,7 +134,7 @@ FOR CL IN CLIENTES LOOP
              into v_serie , vr_bruto, vr_neto , vr_liq , vr_dcto1 , vr_dcto2 , vr_costo , vr_gravado , vr_iva,
                 vr_no_grav , vr_total_base , vr_rets
             from facturas_ventas fv
-            where fv.empresa=P_EMPRESA and
+            where fv.empresa=P_EM/PRESA and
                 fv.ejercicio =TO_CHAR(P_FECHAF,'YYYY') AND FECHA_FACTURA <=P_FECHAF
                 AND cliente=CL.CODIGO_RAPIDO AND fv.numero_serie NOT LIKE 'N%' AND fv.numero_serie NOT IN ('PHC', 'PHD')
                 AND fv.centro_Contable = SI.C_CONTA
